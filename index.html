@@ -950,6 +950,22 @@
             if (section === 'events') {
                 updateAdminEventList();
             }
+            
+            // Reset form when switching to "new" section
+            if (section === 'new') {
+                editingEventId = null;
+                document.getElementById('newEventForm').reset();
+                document.getElementById('newTimetableRows').innerHTML = `
+                    <div class="timetable-row">
+                        <input type="text" placeholder="Zeit (z.B. 14:00)" class="tt-time">
+                        <input type="text" placeholder="Artist" class="tt-artist">
+                        <input type="text" placeholder="Stage" class="tt-stage">
+                        <button type="button" class="btn btn-small btn-danger" onclick="removeTimetableRow(this)">🗑️</button>
+                    </div>
+                `;
+                const submitBtn = document.querySelector('#newEventForm button[type="submit"]');
+                submitBtn.textContent = '💾 Event speichern';
+            }
         }
 
         // Update Admin Event List
@@ -997,7 +1013,6 @@
         function saveNewEvent(e) {
             e.preventDefault();
             
-            const eventId = 'event' + Date.now();
             const timetableRows = document.querySelectorAll('#newTimetableRows .timetable-row');
             const timetable = [];
             
@@ -1010,8 +1025,7 @@
                 }
             });
 
-            const newEvent = {
-                id: eventId,
+            const eventData = {
                 name: document.getElementById('newEventName').value,
                 code: document.getElementById('newEventCode').value,
                 location: document.getElementById('newEventLocation').value,
@@ -1026,11 +1040,33 @@
                 billing: document.getElementById('newBilling').value.replace(/\n/g, '<br>')
             };
 
-            events[eventId] = newEvent;
+            if (editingEventId) {
+                // Update existing event
+                eventData.id = editingEventId;
+                events[editingEventId] = { ...events[editingEventId], ...eventData };
+                editingEventId = null;
+            } else {
+                // Create new event
+                eventData.id = 'event' + Date.now();
+                events[eventData.id] = eventData;
+            }
+
             saveData();
             
             document.getElementById('saveSuccess').style.display = 'block';
             document.getElementById('newEventForm').reset();
+            document.getElementById('newTimetableRows').innerHTML = `
+                <div class="timetable-row">
+                    <input type="text" placeholder="Zeit (z.B. 14:00)" class="tt-time">
+                    <input type="text" placeholder="Artist" class="tt-artist">
+                    <input type="text" placeholder="Stage" class="tt-stage">
+                    <button type="button" class="btn btn-small btn-danger" onclick="removeTimetableRow(this)">🗑️</button>
+                </div>
+            `;
+            
+            // Reset button text
+            const submitBtn = document.querySelector('#newEventForm button[type="submit"]');
+            submitBtn.textContent = '💾 Event speichern';
             
             setTimeout(() => {
                 document.getElementById('saveSuccess').style.display = 'none';
@@ -1039,9 +1075,13 @@
         }
 
         // Edit Event
+        let editingEventId = null;
+
         function editEvent(eventId) {
             const event = events[eventId];
             if (!event) return;
+            
+            editingEventId = eventId;
             
             // Fill form with event data
             document.getElementById('newEventName').value = event.name;
@@ -1050,11 +1090,36 @@
             document.getElementById('newEventDate').value = event.date;
             document.getElementById('newEventTime').value = event.time;
             
+            // Fill textareas (convert <br> back to newlines)
+            document.getElementById('newBackstage').value = event.backstage.replace(/<br>/g, '\n');
+            document.getElementById('newGuestlist').value = event.guestlist.replace(/<br>/g, '\n');
+            document.getElementById('newTech').value = event.tech.replace(/<br>/g, '\n');
+            document.getElementById('newArtistcare').value = event.artistcare.replace(/<br>/g, '\n');
+            document.getElementById('newMedia').value = event.media.replace(/<br>/g, '\n');
+            document.getElementById('newBilling').value = event.billing.replace(/<br>/g, '\n');
+            
+            // Fill timetable
+            const container = document.getElementById('newTimetableRows');
+            container.innerHTML = ''; // Clear existing rows
+            
+            event.timetable.forEach(slot => {
+                const row = document.createElement('div');
+                row.className = 'timetable-row';
+                row.innerHTML = `
+                    <input type="text" placeholder="Zeit" class="tt-time" value="${slot.time}">
+                    <input type="text" placeholder="Artist" class="tt-artist" value="${slot.artist}">
+                    <input type="text" placeholder="Stage" class="tt-stage" value="${slot.stage}">
+                    <button type="button" class="btn btn-small btn-danger" onclick="removeTimetableRow(this)">🗑️</button>
+                `;
+                container.appendChild(row);
+            });
+            
             // Show new event section
             showAdminSection('new');
             
-            // Change save behavior to update instead of create
-            // (In a real app, you'd have separate edit logic)
+            // Change button text to indicate edit mode
+            const submitBtn = document.querySelector('#newEventForm button[type="submit"]');
+            submitBtn.textContent = '💾 Event aktualisieren';
         }
 
         // Delete Event
