@@ -79,7 +79,7 @@
             letter-spacing: 1px;
         }
 
-        select, input {
+        select, input, textarea {
             width: 100%;
             padding: 15px;
             border: 2px solid rgba(0, 217, 255, 0.3);
@@ -88,9 +88,15 @@
             color: #fff;
             font-size: 1em;
             transition: all 0.3s;
+            font-family: inherit;
         }
 
-        select:focus, input:focus {
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        select:focus, input:focus, textarea:focus {
             outline: none;
             border-color: #00d9ff;
             box-shadow: 0 0 20px rgba(0, 217, 255, 0.3);
@@ -121,8 +127,37 @@
             box-shadow: 0 10px 30px rgba(0, 217, 255, 0.4);
         }
 
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid #00d9ff;
+            color: #00d9ff;
+            margin-top: 15px;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 217, 255, 0.1);
+        }
+
+        .btn-danger {
+            background: linear-gradient(90deg, #ff5252, #ff9100);
+            color: #fff;
+        }
+
+        .btn-small {
+            padding: 8px 15px;
+            font-size: 0.9em;
+            width: auto;
+            display: inline-block;
+        }
+
         .error {
             color: #ff5252;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .success {
+            color: #76ff03;
             margin-top: 15px;
             display: none;
         }
@@ -263,6 +298,114 @@
             font-size: 0.9em;
         }
 
+        /* Admin Styles */
+        .admin-nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            padding: 12px 25px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            color: #888;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background: rgba(0, 217, 255, 0.2);
+            border-color: #00d9ff;
+            color: #00d9ff;
+        }
+
+        .admin-section {
+            display: none;
+        }
+
+        .admin-section.active {
+            display: block;
+        }
+
+        .event-list {
+            display: grid;
+            gap: 15px;
+        }
+
+        .event-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .event-item:hover {
+            border-color: #00d9ff;
+            box-shadow: 0 5px 20px rgba(0, 217, 255, 0.2);
+        }
+
+        .event-info h3 {
+            color: #00d9ff;
+            margin-bottom: 5px;
+        }
+
+        .event-info p {
+            color: #888;
+            font-size: 0.9em;
+        }
+
+        .event-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .form-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .form-section h3 {
+            color: #00d9ff;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .timetable-editor {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 15px;
+        }
+
+        .timetable-row {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr auto;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+
+        .timetable-row input {
+            padding: 10px;
+        }
+
         /* Logout */
         .logout-btn {
             position: fixed;
@@ -282,21 +425,56 @@
             color: #fff;
         }
 
+        .switch-mode {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 12px 25px;
+            background: rgba(0, 217, 255, 0.2);
+            border: 1px solid #00d9ff;
+            border-radius: 25px;
+            color: #00d9ff;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .switch-mode:hover {
+            background: #00d9ff;
+            color: #000;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             h1 { font-size: 1.8em; }
             .event-title { font-size: 1.5em; }
             .info-grid { grid-template-columns: 1fr; }
             .event-meta { flex-direction: column; gap: 15px; }
+            .event-item { flex-direction: column; gap: 15px; text-align: center; }
+            .timetable-row { grid-template-columns: 1fr; }
+            .admin-nav { justify-content: center; }
         }
     </style>
 </head>
 <body>
-    <!-- Login Screen -->
-    <div class="login-screen" id="loginScreen">
+    <!-- Main Login Screen -->
+    <div class="login-screen" id="mainLogin">
         <div class="container">
             <div class="logo">🎧</div>
             <h1>Artist Onboarding</h1>
+            <p class="subtitle">Dream Factory Events - Portal</p>
+            
+            <div class="login-box">
+                <button class="btn" onclick="showArtistLogin()">🎵 Ich bin Artist / DJ</button>
+                <button class="btn btn-secondary" onclick="showOrganizerLogin()">🎛️ Ich bin Veranstalter</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Artist Login -->
+    <div class="login-screen" id="artistLogin" style="display: none;">
+        <div class="container">
+            <div class="logo">🎵</div>
+            <h1>Artist Login</h1>
             <p class="subtitle">Dream Factory Events - DJ Portal</p>
             
             <div class="login-box">
@@ -304,9 +482,6 @@
                     <label for="eventSelect">Event auswählen</label>
                     <select id="eventSelect">
                         <option value="">-- Bitte wählen --</option>
-                        <option value="event1">Event 1 - Summer Vibes Festival</option>
-                        <option value="event2">Event 2 - Neon Nights Rave</option>
-                        <option value="event3">Event 3 - Underground Sessions</option>
                     </select>
                 </div>
                 
@@ -315,14 +490,42 @@
                     <input type="password" id="accessCode" placeholder="Code eingeben...">
                 </div>
                 
-                <button class="btn" onclick="login()">Zugang erhalten</button>
-                <p class="error" id="errorMsg">❌ Falscher Code oder kein Event ausgewählt</p>
+                <button class="btn" onclick="artistLogin()">Zugang erhalten</button>
+                <button class="btn btn-secondary" onclick="backToMain()">← Zurück</button>
+                
+                <p class="error" id="artistError">❌ Falscher Code oder kein Event ausgewählt</p>
             </div>
         </div>
     </div>
 
-    <!-- Dashboard -->
-    <div class="dashboard" id="dashboard">
+    <!-- Organizer Login -->
+    <div class="login-screen" id="organizerLogin" style="display: none;">
+        <div class="container">
+            <div class="logo">🎛️</div>
+            <h1>Veranstalter Login</h1>
+            <p class="subtitle">Dream Factory Events - Admin Portal</p>
+            
+            <div class="login-box">
+                <div class="form-group">
+                    <label for="orgUsername">Benutzername</label>
+                    <input type="text" id="orgUsername" placeholder="Benutzername...">
+                </div>
+                
+                <div class="form-group">
+                    <label for="orgPassword">Passwort</label>
+                    <input type="password" id="orgPassword" placeholder="Passwort...">
+                </div>
+                
+                <button class="btn" onclick="organizerLogin()">Einloggen</button>
+                <button class="btn btn-secondary" onclick="backToMain()">← Zurück</button>
+                
+                <p class="error" id="orgError">❌ Falscher Benutzername oder Passwort</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Artist Dashboard -->
+    <div class="dashboard" id="artistDashboard">
         <button class="logout-btn" onclick="logout()">🚪 Abmelden</button>
         
         <div class="container">
@@ -344,24 +547,18 @@
                 </div>
             </div>
 
-            <!-- Timetable -->
             <div class="timetable">
                 <h2><span>🎵</span> Timetable & Playtimes</h2>
-                <div id="timetableContent">
-                    <!-- Dynamisch gefüllt -->
-                </div>
+                <div id="timetableContent"></div>
             </div>
 
-            <!-- Info Cards -->
             <div class="info-grid">
                 <div class="info-card">
                     <div class="card-header">
                         <span class="card-icon">🎭</span>
                         <h3 class="card-title">Backstage</h3>
                     </div>
-                    <div class="card-content" id="backstageContent">
-                        <!-- Dynamisch -->
-                    </div>
+                    <div class="card-content" id="backstageContent"></div>
                 </div>
 
                 <div class="info-card">
@@ -369,9 +566,7 @@
                         <span class="card-icon">🎫</span>
                         <h3 class="card-title">Guestlist</h3>
                     </div>
-                    <div class="card-content" id="guestlistContent">
-                        <!-- Dynamisch -->
-                    </div>
+                    <div class="card-content" id="guestlistContent"></div>
                 </div>
 
                 <div class="info-card">
@@ -379,9 +574,7 @@
                         <span class="card-icon">🎚️</span>
                         <h3 class="card-title">Technik</h3>
                     </div>
-                    <div class="card-content" id="techContent">
-                        <!-- Dynamisch -->
-                    </div>
+                    <div class="card-content" id="techContent"></div>
                 </div>
 
                 <div class="info-card">
@@ -389,9 +582,7 @@
                         <span class="card-icon">🤝</span>
                         <h3 class="card-title">Artist Care</h3>
                     </div>
-                    <div class="card-content" id="artistcareContent">
-                        <!-- Dynamisch -->
-                    </div>
+                    <div class="card-content" id="artistcareContent"></div>
                 </div>
 
                 <div class="info-card">
@@ -399,9 +590,7 @@
                         <span class="card-icon">📸</span>
                         <h3 class="card-title">Foto & Video</h3>
                     </div>
-                    <div class="card-content" id="mediaContent">
-                        <!-- Dynamisch -->
-                    </div>
+                    <div class="card-content" id="mediaContent"></div>
                 </div>
 
                 <div class="info-card">
@@ -409,19 +598,165 @@
                         <span class="card-icon">💰</span>
                         <h3 class="card-title">Rechnungsstellung</h3>
                     </div>
-                    <div class="card-content" id="billingContent">
-                        <!-- Dynamisch -->
+                    <div class="card-content" id="billingContent"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Organizer Dashboard -->
+    <div class="dashboard" id="organizerDashboard">
+        <button class="logout-btn" onclick="logout()">🚪 Abmelden</button>
+        <button class="switch-mode" onclick="switchToArtistView()">🎵 Artist-Ansicht</button>
+        
+        <div class="container">
+            <div class="header">
+                <h2 class="event-title">🎛️ Veranstalter Dashboard</h2>
+                <p style="color: #888; margin-top: 10px;">Verwalte Events, Künstler und alle Details</p>
+            </div>
+
+            <div class="admin-nav">
+                <button class="nav-btn active" onclick="showAdminSection('events')" id="nav-events">📋 Events</button>
+                <button class="nav-btn" onclick="showAdminSection('new')" id="nav-new">➕ Neues Event</button>
+                <button class="nav-btn" onclick="showAdminSection('settings')" id="nav-settings">⚙️ Einstellungen</button>
+            </div>
+
+            <!-- Events List -->
+            <div class="admin-section active" id="section-events">
+                <h2 style="color: #00d9ff; margin-bottom: 20px;">Alle Events</h2>
+                <div class="event-list" id="adminEventList">
+                    <!-- Dynamisch gefüllt -->
+                </div>
+            </div>
+
+            <!-- New Event Form -->
+            <div class="admin-section" id="section-new">
+                <h2 style="color: #00d9ff; margin-bottom: 20px;">Neues Event erstellen</h2>
+                
+                <form id="newEventForm" onsubmit="saveNewEvent(event)">
+                    <div class="form-section">
+                        <h3>📝 Basisinformationen</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Event Name</label>
+                                <input type="text" id="newEventName" required placeholder="z.B. Summer Vibes Festival">
+                            </div>
+                            <div class="form-group">
+                                <label>Zugangscode</label>
+                                <input type="text" id="newEventCode" required placeholder="z.B. 3050">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Ort</label>
+                                <input type="text" id="newEventLocation" required placeholder="z.B. Rheinpark Köln">
+                            </div>
+                            <div class="form-group">
+                                <label>Datum</label>
+                                <input type="text" id="newEventDate" required placeholder="z.B. 15. Juni 2026">
+                            </div>
+                            <div class="form-group">
+                                <label>Zeit</label>
+                                <input type="text" id="newEventTime" required placeholder="z.B. 14:00 - 23:00 Uhr">
+                            </div>
+                        </div>
                     </div>
+
+                    <div class="form-section">
+                        <h3>🎵 Timetable</h3>
+                        <div id="newTimetableRows">
+                            <div class="timetable-row">
+                                <input type="text" placeholder="Zeit (z.B. 14:00)" class="tt-time">
+                                <input type="text" placeholder="Artist" class="tt-artist">
+                                <input type="text" placeholder="Stage" class="tt-stage">
+                                <button type="button" class="btn btn-small btn-danger" onclick="removeTimetableRow(this)">🗑️</button>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-secondary" onclick="addTimetableRow()">➕ Slot hinzufügen</button>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>🎭 Backstage Infos</h3>
+                        <div class="form-group">
+                            <textarea id="newBackstage" placeholder="Backstage Details..."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>🎫 Guestlist</h3>
+                        <div class="form-group">
+                            <textarea id="newGuestlist" placeholder="Guestlist Details..."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>🎚️ Technik</h3>
+                        <div class="form-group">
+                            <textarea id="newTech" placeholder="Technische Details..."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>🤝 Artist Care</h3>
+                        <div class="form-group">
+                            <textarea id="newArtistcare" placeholder="Artist Care Kontakte..."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>📸 Foto & Video</h3>
+                        <div class="form-group">
+                            <textarea id="newMedia" placeholder="Media Details..."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>💰 Rechnungsstellung</h3>
+                        <div class="form-group">
+                            <textarea id="newBilling" placeholder="Rechnungsdetails..."></textarea>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn">💾 Event speichern</button>
+                    <p class="success" id="saveSuccess">✅ Event erfolgreich gespeichert!</p>
+                </form>
+            </div>
+
+            <!-- Settings -->
+            <div class="admin-section" id="section-settings">
+                <h2 style="color: #00d9ff; margin-bottom: 20px;">⚙️ Einstellungen</h2>
+                
+                <div class="form-section">
+                    <h3>🔐 Login-Daten ändern</h3>
+                    <div class="form-group">
+                        <label>Neuer Benutzername</label>
+                        <input type="text" id="newUsername" placeholder="Neuer Benutzername">
+                    </div>
+                    <div class="form-group">
+                        <label>Neues Passwort</label>
+                        <input type="password" id="newPassword" placeholder="Neues Passwort">
+                    </div>
+                    <button class="btn" onclick="updateCredentials()">💾 Speichern</button>
+                    <p class="success" id="credSuccess">✅ Login-Daten aktualisiert!</p>
+                </div>
+
+                <div class="form-section" style="margin-top: 30px;">
+                    <h3>🗑️ Daten</h3>
+                    <button class="btn btn-danger" onclick="exportData()">📥 Alle Events exportieren</button>
+                    <button class="btn btn-danger" onclick="clearAllData()" style="margin-top: 10px;">⚠️ ALLE Daten löschen</button>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Event Daten
-        const events = {
+        // Standard Events (werden überschrieben wenn localStorage existiert)
+        let events = {
             event1: {
+                id: 'event1',
                 name: "Summer Vibes Festival",
+                code: "3050",
                 location: "Rheinpark Köln",
                 date: "15. Juni 2026",
                 time: "14:00 - 23:00 Uhr",
@@ -431,47 +766,17 @@
                     { time: "18:00", artist: "Headliner", stage: "Main Stage" },
                     { time: "20:00", artist: "Closing Act", stage: "Main Stage" }
                 ],
-                backstage: `
-                    <p><strong>Backstage Bereich:</strong> Hinter der Main Stage, blaues Zelt</p>
-                    <p><strong>Catering:</strong> Ab 13:00 Uhr verfügbar</p>
-                    <p><strong>Dressing Rooms:</strong> 3 Stück, nach Ankunft zuweisen</p>
-                    <p><strong>Parking:</strong> Artist Parking - Ausweis an der Abendkasse abholen</p>
-                `,
-                guestlist: `
-                    <p><strong>+1 Guestlist:</strong> Max. 2 Personen</p>
-                    <p><strong>Name eintragen bis:</strong> 48h vor Event</p>
-                    <p><strong>Kontakt:</strong> guestlist@dreamfactory.de</p>
-                    <p><strong>Einlass Guestlist:</strong> Separater Eingang links</p>
-                `,
-                tech: `
-                    <p><strong>Setup Time:</strong> 30 Min vor Slot</p>
-                    <p><strong>Equipment:</strong> Pioneer CDJ-3000, DJM-V10</p>
-                    <p><strong>Monitoring:</strong> In-Ear verfügbar (anmelden)</p>
-                    <p><strong>Techniker:</strong> Mike +49 123 456789</p>
-                `,
-                artistcare: `
-                    <p><strong>Artist Care Manager:</strong> Sarah Müller</p>
-                    <p><strong>Telefon:</strong> +49 176 12345678</p>
-                    <p><strong>Notfall:</strong> +49 176 87654321 (24h)</p>
-                    <p><strong>Email:</strong> artistcare@dreamfactory.de</p>
-                `,
-                media: `
-                    <p><strong>Fotograf:</strong> Max Photography</p>
-                    <p><strong>Video:</strong> Event wird gefilmt für Social Media</p>
-                    <p><strong>Rechte:</strong> Nutzung für Promotion erlaubt</p>
-                    <p><strong>Downloads:</strong> Fotos nach 48h verfügbar</p>
-                `,
-                billing: `
-                    <p><strong>Rechnungsadresse:</strong></p>
-                    <p>Dream Factory Events GmbH<br>
-                    Am Rheinpark 10<br>
-                    50679 Köln</p>
-                    <p><strong>Rechnungs-Email:</strong> billing@dreamfactory.de</p>
-                    <p><strong>Zahlungsziel:</strong> 14 Tage nach Rechnungseingang</p>
-                `
+                backstage: "<p><strong>Backstage Bereich:</strong> Hinter der Main Stage, blaues Zelt</p><p><strong>Catering:</strong> Ab 13:00 Uhr verfügbar</p><p><strong>Dressing Rooms:</strong> 3 Stück, nach Ankunft zuweisen</p><p><strong>Parking:</strong> Artist Parking - Ausweis an der Abendkasse abholen</p>",
+                guestlist: "<p><strong>+1 Guestlist:</strong> Max. 2 Personen</p><p><strong>Name eintragen bis:</strong> 48h vor Event</p><p><strong>Kontakt:</strong> guestlist@dreamfactory.de</p><p><strong>Einlass Guestlist:</strong> Separater Eingang links</p>",
+                tech: "<p><strong>Setup Time:</strong> 30 Min vor Slot</p><p><strong>Equipment:</strong> Pioneer CDJ-3000, DJM-V10</p><p><strong>Monitoring:</strong> In-Ear verfügbar (anmelden)</p><p><strong>Techniker:</strong> Mike +49 123 456789</p>",
+                artistcare: "<p><strong>Artist Care Manager:</strong> Sarah Müller</p><p><strong>Telefon:</strong> +49 176 12345678</p><p><strong>Notfall:</strong> +49 176 87654321 (24h)</p><p><strong>Email:</strong> artistcare@dreamfactory.de</p>",
+                media: "<p><strong>Fotograf:</strong> Max Photography</p><p><strong>Video:</strong> Event wird gefilmt für Social Media</p><p><strong>Rechte:</strong> Nutzung für Promotion erlaubt</p><p><strong>Downloads:</strong> Fotos nach 48h verfügbar</p>",
+                billing: "<p><strong>Rechnungsadresse:</strong></p><p>Dream Factory Events GmbH<br>Am Rheinpark 10<br>50679 Köln</p><p><strong>Rechnungs-Email:</strong> billing@dreamfactory.de</p><p><strong>Zahlungsziel:</strong> 14 Tage nach Rechnungseingang</p>"
             },
             event2: {
+                id: 'event2',
                 name: "Neon Nights Rave",
+                code: "3050",
                 location: "Warehouse Düsseldorf",
                 date: "22. Juni 2026",
                 time: "23:00 - 06:00 Uhr",
@@ -481,44 +786,17 @@
                     { time: "03:00", artist: "Late Night", stage: "Floor 2" },
                     { time: "05:00", artist: "Closing", stage: "Floor 1" }
                 ],
-                backstage: `
-                    <p><strong>Backstage:</strong> Obergeschoss, Raum 204</p>
-                    <p><strong>Catering:</strong> 22:00 - 07:00 durchgehend</p>
-                    <p><strong>Lounge:</strong> Chill-Out Bereich mit Sofas</p>
-                    <p><strong>Security:</strong> Wristband erforderlich</p>
-                `,
-                guestlist: `
-                    <p><strong>+1 Guestlist:</strong> Max. 3 Personen</p>
-                    <p><strong>Einlass:</strong> Bis 02:00 Uhr</p>
-                    <p><strong>Kontakt:</strong> vip@dreamfactory.de</p>
-                `,
-                tech: `
-                    <p><strong>Setup:</strong> 45 Min vor Slot</p>
-                    <p><strong>System:</strong> Funktion-One Soundsystem</p>
-                    <p><strong>Decks:</strong> 4x Technics SL-1210, 2x CDJ-3000</p>
-                    <p><strong>Techniker:</strong> Tom +49 176 99988877</p>
-                `,
-                artistcare: `
-                    <p><strong>Manager:</strong> Lisa Schmidt</p>
-                    <p><strong>Telefon:</strong> +49 176 11122233</p>
-                    <p><strong>Notfall:</strong> +49 176 44455566</p>
-                    <p><strong>Email:</strong> neoncare@dreamfactory.de</p>
-                `,
-                media: `
-                    <p><strong>Fotograf:</strong> Night Vision Media</p>
-                    <p><strong>Video:</strong> Live-Stream möglich</p>
-                    <p><strong>Social:</strong> #NeonNights2026</p>
-                `,
-                billing: `
-                    <p><strong>Rechnungsadresse:</strong></p>
-                    <p>Dream Factory Events GmbH<br>
-                    Hafenstraße 25<br>
-                    40215 Düsseldorf</p>
-                    <p><strong>Rechnungs-Email:</strong> rechnung@dreamfactory.de</p>
-                `
+                backstage: "<p><strong>Backstage:</strong> Obergeschoss, Raum 204</p><p><strong>Catering:</strong> 22:00 - 07:00 durchgehend</p><p><strong>Lounge:</strong> Chill-Out Bereich mit Sofas</p><p><strong>Security:</strong> Wristband erforderlich</p>",
+                guestlist: "<p><strong>+1 Guestlist:</strong> Max. 3 Personen</p><p><strong>Einlass:</strong> Bis 02:00 Uhr</p><p><strong>Kontakt:</strong> vip@dreamfactory.de</p>",
+                tech: "<p><strong>Setup:</strong> 45 Min vor Slot</p><p><strong>System:</strong> Funktion-One Soundsystem</p><p><strong>Decks:</strong> 4x Technics SL-1210, 2x CDJ-3000</p><p><strong>Techniker:</strong> Tom +49 176 99988877</p>",
+                artistcare: "<p><strong>Manager:</strong> Lisa Schmidt</p><p><strong>Telefon:</strong> +49 176 11122233</p><p><strong>Notfall:</strong> +49 176 44455566</p><p><strong>Email:</strong> neoncare@dreamfactory.de</p>",
+                media: "<p><strong>Fotograf:</strong> Night Vision Media</p><p><strong>Video:</strong> Live-Stream möglich</p><p><strong>Social:</strong> #NeonNights2026</p>",
+                billing: "<p><strong>Rechnungsadresse:</strong></p><p>Dream Factory Events GmbH<br>Hafenstraße 25<br>40215 Düsseldorf</p><p><strong>Rechnungs-Email:</strong> rechnung@dreamfactory.de</p>"
             },
             event3: {
+                id: 'event3',
                 name: "Underground Sessions",
+                code: "3050",
                 location: "Secret Location (Details nach Anmeldung)",
                 date: "29. Juni 2026",
                 time: "22:00 - 05:00 Uhr",
@@ -528,61 +806,105 @@
                     { time: "02:30", artist: "B2B Session", stage: "Main" },
                     { time: "04:00", artist: "Closing Set", stage: "Main" }
                 ],
-                backstage: `
-                    <p><strong>Location:</strong> Wird 24h vor Event bekannt gegeben</p>
-                    <p><strong>Backstage:</strong> Nur mit speziellem Pass</p>
-                    <p><strong>Catering:</strong> Vegan & Bio Optionen verfügbar</p>
-                    <p><strong>Atmosphäre:</strong> Intimate, max. 200 Gäste</p>
-                `,
-                guestlist: `
-                    <p><strong>+1:</strong> Max. 1 Person (exklusiv)</p>
-                    <p><strong>Anmeldung:</strong> Nur über Artist Care</p>
-                    <p><strong>Einlass:</strong> Strikte Door Policy</p>
-                `,
-                tech: `
-                    <p><strong>Setup:</strong> 1h vor Slot (intimate setup)</p>
-                    <p><strong>Equipment:</strong> Rotary Mixer, Vinyl Setup</p>
-                    <p><strong>Sound:</strong> Custom Soundsystem</p>
-                    <p><strong>Techniker:</strong> Alex (vor Ort)</p>
-                `,
-                artistcare: `
-                    <p><strong>Manager:</strong> Chris Underground</p>
-                    <p><strong>Telefon:</strong> +49 176 77788899</p>
-                    <p><strong>Signal/WhatsApp:</strong> Bevorzugt</p>
-                    <p><strong>Email:</strong> underground@dreamfactory.de</p>
-                `,
-                media: `
-                    <p><strong>Policy:</strong> No Phones auf Dancefloor</p>
-                    <p><strong>Fotos:</strong> Nur professionell, vorher ankündigen</p>
-                    <p><strong>Video:</strong> Keine Aufnahmen ohne Absprache</p>
-                `,
-                billing: `
-                    <p><strong>Rechnungsadresse:</strong></p>
-                    <p>Dream Factory Events GmbH<br>
-                    Postfach 123<br>
-                    50667 Köln</p>
-                    <p><strong>Rechnungs-Email:</strong> finance@dreamfactory.de</p>
-                `
+                backstage: "<p><strong>Location:</strong> Wird 24h vor Event bekannt gegeben</p><p><strong>Backstage:</strong> Nur mit speziellem Pass</p><p><strong>Catering:</strong> Vegan & Bio Optionen verfügbar</p><p><strong>Atmosphäre:</strong> Intimate, max. 200 Gäste</p>",
+                guestlist: "<p><strong>+1:</strong> Max. 1 Person (exklusiv)</p><p><strong>Anmeldung:</strong> Nur über Artist Care</p><p><strong>Einlass:</strong> Strikte Door Policy</p>",
+                tech: "<p><strong>Setup:</strong> 1h vor Slot (intimate setup)</p><p><strong>Equipment:</strong> Rotary Mixer, Vinyl Setup</p><p><strong>Sound:</strong> Custom Soundsystem</p><p><strong>Techniker:</strong> Alex (vor Ort)</p>",
+                artistcare: "<p><strong>Manager:</strong> Chris Underground</p><p><strong>Telefon:</strong> +49 176 77788899</p><p><strong>Signal/WhatsApp:</strong> Bevorzugt</p><p><strong>Email:</strong> underground@dreamfactory.de</p>",
+                media: "<p><strong>Policy:</strong> No Phones auf Dancefloor</p><p><strong>Fotos:</strong> Nur professionell, vorher ankündigen</p><p><strong>Video:</strong> Keine Aufnahmen ohne Absprache</p>",
+                billing: "<p><strong>Rechnungsadresse:</strong></p><p>Dream Factory Events GmbH<br>Postfach 123<br>50667 Köln</p><p><strong>Rechnungs-Email:</strong> finance@dreamfactory.de</p>"
             }
         };
 
-        function login() {
-            const event = document.getElementById('eventSelect').value;
-            const code = document.getElementById('accessCode').value;
-            const errorMsg = document.getElementById('errorMsg');
+        // Organizer Credentials
+        let organizerCreds = {
+            username: "patrick",
+            password: "Z0eistdieBeste!!!"
+        };
 
-            if (event && code === '3050') {
+        // Load from localStorage
+        function loadData() {
+            const savedEvents = localStorage.getItem('dfEvents');
+            if (savedEvents) {
+                events = JSON.parse(savedEvents);
+            }
+            const savedCreds = localStorage.getItem('dfCreds');
+            if (savedCreds) {
+                organizerCreds = JSON.parse(savedCreds);
+            }
+        }
+
+        // Save to localStorage
+        function saveData() {
+            localStorage.setItem('dfEvents', JSON.stringify(events));
+            localStorage.setItem('dfCreds', JSON.stringify(organizerCreds));
+        }
+
+        // Initialize
+        loadData();
+        populateEventSelect();
+
+        // Navigation Functions
+        function showArtistLogin() {
+            document.getElementById('mainLogin').style.display = 'none';
+            document.getElementById('artistLogin').style.display = 'flex';
+            populateEventSelect();
+        }
+
+        function showOrganizerLogin() {
+            document.getElementById('mainLogin').style.display = 'none';
+            document.getElementById('organizerLogin').style.display = 'flex';
+        }
+
+        function backToMain() {
+            document.getElementById('artistLogin').style.display = 'none';
+            document.getElementById('organizerLogin').style.display = 'none';
+            document.getElementById('mainLogin').style.display = 'flex';
+        }
+
+        function populateEventSelect() {
+            const select = document.getElementById('eventSelect');
+            select.innerHTML = '<option value="">-- Bitte wählen --</option>';
+            
+            Object.values(events).forEach(event => {
+                const option = document.createElement('option');
+                option.value = event.id;
+                option.textContent = event.name;
+                select.appendChild(option);
+            });
+        }
+
+        // Artist Login
+        function artistLogin() {
+            const eventId = document.getElementById('eventSelect').value;
+            const code = document.getElementById('accessCode').value;
+            const errorMsg = document.getElementById('artistError');
+
+            if (eventId && events[eventId] && code === events[eventId].code) {
                 errorMsg.style.display = 'none';
-                showDashboard(event);
+                showArtistDashboard(eventId);
             } else {
                 errorMsg.style.display = 'block';
             }
         }
 
-        function showDashboard(eventKey) {
-            const event = events[eventKey];
+        // Organizer Login
+        function organizerLogin() {
+            const username = document.getElementById('orgUsername').value;
+            const password = document.getElementById('orgPassword').value;
+            const errorMsg = document.getElementById('orgError');
+
+            if (username === organizerCreds.username && password === organizerCreds.password) {
+                errorMsg.style.display = 'none';
+                showOrganizerDashboard();
+            } else {
+                errorMsg.style.display = 'block';
+            }
+        }
+
+        // Show Artist Dashboard
+        function showArtistDashboard(eventId) {
+            const event = events[eventId];
             
-            // Event Info
             document.getElementById('eventName').textContent = event.name;
             document.getElementById('eventLocation').textContent = event.location;
             document.getElementById('eventDate').textContent = event.date;
@@ -606,21 +928,198 @@
             document.getElementById('mediaContent').innerHTML = event.media;
             document.getElementById('billingContent').innerHTML = event.billing;
 
-            // Screen wechseln
-            document.getElementById('loginScreen').style.display = 'none';
-            document.getElementById('dashboard').style.display = 'block';
+            document.getElementById('artistLogin').style.display = 'none';
+            document.getElementById('artistDashboard').style.display = 'block';
         }
 
+        // Show Organizer Dashboard
+        function showOrganizerDashboard() {
+            document.getElementById('organizerLogin').style.display = 'none';
+            document.getElementById('organizerDashboard').style.display = 'block';
+            updateAdminEventList();
+        }
+
+        // Admin Navigation
+        function showAdminSection(section) {
+            document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            
+            document.getElementById('section-' + section).classList.add('active');
+            document.getElementById('nav-' + section).classList.add('active');
+            
+            if (section === 'events') {
+                updateAdminEventList();
+            }
+        }
+
+        // Update Admin Event List
+        function updateAdminEventList() {
+            const list = document.getElementById('adminEventList');
+            list.innerHTML = '';
+            
+            Object.values(events).forEach(event => {
+                const item = document.createElement('div');
+                item.className = 'event-item';
+                item.innerHTML = `
+                    <div class="event-info">
+                        <h3>${event.name}</h3>
+                        <p>📍 ${event.location} | 📅 ${event.date} | 🔑 Code: ${event.code}</p>
+                    </div>
+                    <div class="event-actions">
+                        <button class="btn btn-small" onclick="editEvent('${event.id}')">✏️ Bearbeiten</button>
+                        <button class="btn btn-small btn-danger" onclick="deleteEvent('${event.id}')">🗑️ Löschen</button>
+                    </div>
+                `;
+                list.appendChild(item);
+            });
+        }
+
+        // Add Timetable Row
+        function addTimetableRow() {
+            const container = document.getElementById('newTimetableRows');
+            const row = document.createElement('div');
+            row.className = 'timetable-row';
+            row.innerHTML = `
+                <input type="text" placeholder="Zeit" class="tt-time">
+                <input type="text" placeholder="Artist" class="tt-artist">
+                <input type="text" placeholder="Stage" class="tt-stage">
+                <button type="button" class="btn btn-small btn-danger" onclick="removeTimetableRow(this)">🗑️</button>
+            `;
+            container.appendChild(row);
+        }
+
+        // Remove Timetable Row
+        function removeTimetableRow(btn) {
+            btn.parentElement.remove();
+        }
+
+        // Save New Event
+        function saveNewEvent(e) {
+            e.preventDefault();
+            
+            const eventId = 'event' + Date.now();
+            const timetableRows = document.querySelectorAll('#newTimetableRows .timetable-row');
+            const timetable = [];
+            
+            timetableRows.forEach(row => {
+                const time = row.querySelector('.tt-time').value;
+                const artist = row.querySelector('.tt-artist').value;
+                const stage = row.querySelector('.tt-stage').value;
+                if (time && artist) {
+                    timetable.push({ time, artist, stage: stage || 'Main Stage' });
+                }
+            });
+
+            const newEvent = {
+                id: eventId,
+                name: document.getElementById('newEventName').value,
+                code: document.getElementById('newEventCode').value,
+                location: document.getElementById('newEventLocation').value,
+                date: document.getElementById('newEventDate').value,
+                time: document.getElementById('newEventTime').value,
+                timetable: timetable,
+                backstage: document.getElementById('newBackstage').value.replace(/\n/g, '<br>'),
+                guestlist: document.getElementById('newGuestlist').value.replace(/\n/g, '<br>'),
+                tech: document.getElementById('newTech').value.replace(/\n/g, '<br>'),
+                artistcare: document.getElementById('newArtistcare').value.replace(/\n/g, '<br>'),
+                media: document.getElementById('newMedia').value.replace(/\n/g, '<br>'),
+                billing: document.getElementById('newBilling').value.replace(/\n/g, '<br>')
+            };
+
+            events[eventId] = newEvent;
+            saveData();
+            
+            document.getElementById('saveSuccess').style.display = 'block';
+            document.getElementById('newEventForm').reset();
+            
+            setTimeout(() => {
+                document.getElementById('saveSuccess').style.display = 'none';
+                showAdminSection('events');
+            }, 2000);
+        }
+
+        // Edit Event
+        function editEvent(eventId) {
+            const event = events[eventId];
+            if (!event) return;
+            
+            // Fill form with event data
+            document.getElementById('newEventName').value = event.name;
+            document.getElementById('newEventCode').value = event.code;
+            document.getElementById('newEventLocation').value = event.location;
+            document.getElementById('newEventDate').value = event.date;
+            document.getElementById('newEventTime').value = event.time;
+            
+            // Show new event section
+            showAdminSection('new');
+            
+            // Change save behavior to update instead of create
+            // (In a real app, you'd have separate edit logic)
+        }
+
+        // Delete Event
+        function deleteEvent(eventId) {
+            if (confirm('Event wirklich löschen?')) {
+                delete events[eventId];
+                saveData();
+                updateAdminEventList();
+            }
+        }
+
+        // Update Credentials
+        function updateCredentials() {
+            const newUser = document.getElementById('newUsername').value;
+            const newPass = document.getElementById('newPassword').value;
+            
+            if (newUser) organizerCreds.username = newUser;
+            if (newPass) organizerCreds.password = newPass;
+            
+            saveData();
+            document.getElementById('credSuccess').style.display = 'block';
+            setTimeout(() => document.getElementById('credSuccess').style.display = 'none', 3000);
+        }
+
+        // Export Data
+        function exportData() {
+            const dataStr = JSON.stringify(events, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'dream-factory-events.json';
+            link.click();
+        }
+
+        // Clear All Data
+        function clearAllData() {
+            if (confirm('ALLE Events wirklich löschen? Dies kann nicht rückgängig gemacht werden!')) {
+                events = {};
+                saveData();
+                updateAdminEventList();
+            }
+        }
+
+        // Switch to Artist View
+        function switchToArtistView() {
+            logout();
+            showArtistLogin();
+        }
+
+        // Logout
         function logout() {
-            document.getElementById('loginScreen').style.display = 'flex';
-            document.getElementById('dashboard').style.display = 'none';
-            document.getElementById('eventSelect').value = '';
+            document.getElementById('artistDashboard').style.display = 'none';
+            document.getElementById('organizerDashboard').style.display = 'none';
+            document.getElementById('mainLogin').style.display = 'flex';
             document.getElementById('accessCode').value = '';
+            document.getElementById('orgPassword').value = '';
         }
 
         // Enter key support
-        document.getElementById('accessCode').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') login();
+        document.getElementById('accessCode')?.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') artistLogin();
+        });
+        document.getElementById('orgPassword')?.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') organizerLogin();
         });
     </script>
 </body>
